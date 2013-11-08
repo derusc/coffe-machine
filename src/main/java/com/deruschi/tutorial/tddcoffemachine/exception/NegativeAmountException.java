@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package it.derusc.tutorial.tddcoffemachine.exception;
+package com.deruschi.tutorial.tddcoffemachine.exception;
 
 /**
  *

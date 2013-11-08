@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package it.derusc.tutorial.tddcoffemachine;
+package com.deruschi.tutorial.tdd.coffemachine;
 
 import java.math.BigDecimal;
 

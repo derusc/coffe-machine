@@ -4,9 +4,13 @@
  * and open the template in the editor.
  */
 
-package it.derusc.tutorial.tddcoffemachine;
+package com.deruschi.tutorial.tdd.coffemachine;
 
-import it.derusc.tutorial.tddcoffemachine.exception.NegativeAmountException;
+import com.deruschi.tutorial.tdd.coffemachine.Drink;
+import com.deruschi.tutorial.tdd.coffemachine.Packet;
+import com.deruschi.tutorial.tdd.coffemachine.ConsumerOrder;
+import com.deruschi.tutorial.tdd.coffemachine.Protocol;
+import com.deruschi.tutorial.tddcoffemachine.exception.NegativeAmountException;
 import java.math.BigDecimal;
 import org.junit.After;
 import org.junit.AfterClass;

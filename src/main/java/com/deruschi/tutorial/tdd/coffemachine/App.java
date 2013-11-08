@@ -1,4 +1,4 @@
-package it.derusc.tutorial.tddcoffemachine;
+package com.deruschi.tutorial.tdd.coffemachine;
 
 /**
  * Hello world!
