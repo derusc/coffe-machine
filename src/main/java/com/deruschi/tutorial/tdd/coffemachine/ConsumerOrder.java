@@ -15,10 +15,10 @@ import java.math.BigDecimal;
  */
 class ConsumerOrder {
     
-    private Drink drink;
-    private int sugar;
-    private BigDecimal amount;
-    private boolean extraHot;
+    private final Drink drink;
+    private  int sugar;
+    private  BigDecimal amount;
+    private final boolean extraHot;
     
     ConsumerOrder(Drink drink, int sugar,double amount, boolean extraHot) throws NegativeAmountException{
         this.drink = drink;
