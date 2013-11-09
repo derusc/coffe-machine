@@ -6,17 +6,11 @@
 
 package com.deruschi.tutorial.tdd.coffemachine;
 
-import com.deruschi.tutorial.tdd.coffemachine.Drink;
-import com.deruschi.tutorial.tdd.coffemachine.Packet;
-import com.deruschi.tutorial.tdd.coffemachine.ConsumerOrder;
-import com.deruschi.tutorial.tdd.coffemachine.Protocol;
 import com.deruschi.tutorial.tddcoffemachine.exception.NegativeAmountException;
 import java.math.BigDecimal;
 import org.junit.After;
-import org.junit.AfterClass;
 import static org.junit.Assert.*;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -26,14 +20,6 @@ import org.junit.Test;
 public class DrinkMoneyTest {
     
     public DrinkMoneyTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
     }
     
     @Before
@@ -61,13 +47,5 @@ public class DrinkMoneyTest {
         Packet pkt = Protocol.generateCommand(order);
         BigDecimal missingMoney = new BigDecimal(Drink.Coffe.getPrice()-insertedMoney);
         assertEquals("Not enough money","M:Insert " + missingMoney.doubleValue() + " more.",pkt.getMessage());
-    }
-    
-    @Test(expected = NegativeAmountException.class)
-    public void negativeMoney() throws NegativeAmountException{
-        double insertedMoney = -1;
-        ConsumerOrder order;
-        order = new ConsumerOrder(Drink.Coffe,1,insertedMoney,false);
-        
     }
 }

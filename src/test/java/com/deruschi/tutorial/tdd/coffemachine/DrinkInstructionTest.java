@@ -6,118 +6,152 @@
 
 package com.deruschi.tutorial.tdd.coffemachine;
 
-import com.deruschi.tutorial.tdd.coffemachine.Drink;
-import com.deruschi.tutorial.tdd.coffemachine.Packet;
-import com.deruschi.tutorial.tdd.coffemachine.ConsumerOrder;
-import com.deruschi.tutorial.tdd.coffemachine.Protocol;
 import com.deruschi.tutorial.tddcoffemachine.exception.NegativeAmountException;
+import java.math.BigDecimal;
 import org.junit.*;
 import static org.junit.Assert.*;
-
+import static org.mockito.Mockito.*;
+        
 /**
  *
  * @author derusc
  */
 public class DrinkInstructionTest {
 
+    ConsumerOrder mockedOrder;
+    @Before
+    public void setUP(){
+        mockedOrder = mock(ConsumerOrder.class);
+    }
+    
+    @After
+    public void tearDown(){
+        mockedOrder = null;
+    }
+    
     @Test
-    public void coffeDrink() throws NegativeAmountException{
-        ConsumerOrder order = new ConsumerOrder(Drink.Coffe,0,100,false);
-        Packet message = Protocol.generateCommand(order);
+    public void coffeDrinkInstruction() {
+        when(mockedOrder.getDrink()).thenReturn(Drink.Coffe);
+        when(mockedOrder.getSugar()).thenReturn(0);
+        when(mockedOrder.isWithSugar()).thenReturn(false);
+        when(mockedOrder.getAmount()).thenReturn(new BigDecimal(100));        
+        when(mockedOrder.isExtraHot()).thenReturn(false);
+
+        Packet message = Protocol.generateCommand(mockedOrder);
         assertEquals("Coffe request","C::",message.getMessage());
         
     }
     
     @Test
-    public void teaDrink() throws NegativeAmountException{
+    public void teaDrinkInstruction(){
                 
-        ConsumerOrder order = new ConsumerOrder(Drink.Tea,0,100,false);
-        Packet message = Protocol.generateCommand(order);
+        when(mockedOrder.getDrink()).thenReturn(Drink.Tea);
+        when(mockedOrder.getSugar()).thenReturn(0);
+        when(mockedOrder.isWithSugar()).thenReturn(false);
+        when(mockedOrder.getAmount()).thenReturn(new BigDecimal(100));        
+        when(mockedOrder.isExtraHot()).thenReturn(false);        
+        Packet message = Protocol.generateCommand(mockedOrder);
         assertEquals("Tea request","T::",message.getMessage());
     }
     
     @Test
-    public void chocolateDrink() throws NegativeAmountException{
+    public void chocolateDrinkInstruction() throws NegativeAmountException{
                 
-        ConsumerOrder order = new ConsumerOrder(Drink.Chocolate,0,100,false);
-        Packet message = Protocol.generateCommand(order);
+        when(mockedOrder.getDrink()).thenReturn(Drink.Chocolate);
+        when(mockedOrder.getSugar()).thenReturn(0);
+        when(mockedOrder.isWithSugar()).thenReturn(false);
+        when(mockedOrder.getAmount()).thenReturn(new BigDecimal(100));        
+        when(mockedOrder.isExtraHot()).thenReturn(false);
+        Packet message = Protocol.generateCommand(mockedOrder);
         assertEquals("Chocolate request","H::",message.getMessage());
     }
     
     @Test
-    public void orangeJuiceDrink() throws NegativeAmountException{
-        ConsumerOrder order = new ConsumerOrder(Drink.OrangeJuice,0,100,false);
-        Packet message = Protocol.generateCommand(order);
+    public void orangeJuiceDrinkInstruction() throws NegativeAmountException{
+        when(mockedOrder.getDrink()).thenReturn(Drink.OrangeJuice);
+        when(mockedOrder.getSugar()).thenReturn(0);
+        when(mockedOrder.isWithSugar()).thenReturn(false);
+        when(mockedOrder.getAmount()).thenReturn(new BigDecimal(100));        
+        when(mockedOrder.isExtraHot()).thenReturn(false);
+        Packet message = Protocol.generateCommand(mockedOrder);
         assertEquals("Orange juice request","O::",message.getMessage());
     }
     
     
     @Test
-    public void noSugar() throws NegativeAmountException{
-        ConsumerOrder order = new ConsumerOrder(Drink.Coffe,0,100,false);
-        Packet message = Protocol.generateCommand(order);
+    public void noSugarInstruction() throws NegativeAmountException{
+        when(mockedOrder.getDrink()).thenReturn(Drink.Coffe);
+        when(mockedOrder.getSugar()).thenReturn(0);
+        when(mockedOrder.isWithSugar()).thenReturn(false);
+        when(mockedOrder.getAmount()).thenReturn(new BigDecimal(100));        
+        when(mockedOrder.isExtraHot()).thenReturn(false);
+        Packet message = Protocol.generateCommand(mockedOrder);
         assertEquals("no Sugar request","C::",message.getMessage());
     }
     
     @Test
-    public void oneSugar() throws NegativeAmountException{
-        ConsumerOrder order = new ConsumerOrder(Drink.Coffe,1,100,false);
-        Packet message = Protocol.generateCommand(order);
+    public void oneSugarInstruction() throws NegativeAmountException{
+        when(mockedOrder.getDrink()).thenReturn(Drink.Coffe);
+        when(mockedOrder.getSugar()).thenReturn(1);
+        when(mockedOrder.isWithSugar()).thenReturn(true);
+        when(mockedOrder.getAmount()).thenReturn(new BigDecimal(100));        
+        when(mockedOrder.isExtraHot()).thenReturn(false);
+        Packet message = Protocol.generateCommand(mockedOrder);
         assertEquals("one Sugar request", "C:1:0", message.getMessage());
     }
     
     @Test 
-    public void twoSugar() throws NegativeAmountException{
-        ConsumerOrder order = new ConsumerOrder(Drink.Coffe,2,100,false);
-        Packet message = Protocol.generateCommand(order);
+    public void twoSugarInstruction() throws NegativeAmountException{
+        when(mockedOrder.getDrink()).thenReturn(Drink.Coffe);
+        when(mockedOrder.getSugar()).thenReturn(2);
+        when(mockedOrder.isWithSugar()).thenReturn(true);
+        when(mockedOrder.getAmount()).thenReturn(new BigDecimal(100));        
+        when(mockedOrder.isExtraHot()).thenReturn(false);
+        Packet message = Protocol.generateCommand(mockedOrder);
         assertEquals("two Sugar request", "C:2:0", message.getMessage());
-    }
-    
-    @Test 
-    public void negativeSugar() throws NegativeAmountException{
-        ConsumerOrder order = new ConsumerOrder(Drink.Coffe,-1,100,false);
-        Packet message = Protocol.generateCommand(order);
-        assertEquals("negative Sugar request", "C::", message.getMessage());
-    }
-    
-    @Test 
-    public void overTwoSugar() throws NegativeAmountException{
-        ConsumerOrder order = new ConsumerOrder(Drink.Coffe,3,100,false);
-        Packet message = Protocol.generateCommand(order);
-        assertEquals("over two Sugar request", "C:2:0", message.getMessage());
-    }
-    
-    @Test
-    public void messageToInterface() throws NegativeAmountException{
-        Packet message = Protocol.generateMessage("Message");
-        assertEquals("message to Interface","M:Message",message.getMessage());
     }
    
     @Test
-    public void coffeExtraHot() throws NegativeAmountException{
-        ConsumerOrder order = new ConsumerOrder(Drink.Coffe,0,100,true);
-        Packet message = Protocol.generateCommand(order);
+    public void coffeExtraHotInstruction() throws NegativeAmountException{
+        when(mockedOrder.getDrink()).thenReturn(Drink.Coffe);
+        when(mockedOrder.getSugar()).thenReturn(0);
+        when(mockedOrder.isWithSugar()).thenReturn(false);
+        when(mockedOrder.getAmount()).thenReturn(new BigDecimal(100));        
+        when(mockedOrder.isExtraHot()).thenReturn(true);
+        Packet message = Protocol.generateCommand(mockedOrder);
         assertEquals("coffe Extra Hot", "Ch::", message.getMessage());
     }
     
     @Test
-    public void teaExtraHot() throws NegativeAmountException{
-        ConsumerOrder order = new ConsumerOrder(Drink.Tea,1,100,true);
-        Packet message = Protocol.generateCommand(order);
+    public void teaExtraHotInstruction() throws NegativeAmountException{
+        when(mockedOrder.getDrink()).thenReturn(Drink.Tea);
+        when(mockedOrder.getSugar()).thenReturn(1);
+        when(mockedOrder.isWithSugar()).thenReturn(true);
+        when(mockedOrder.getAmount()).thenReturn(new BigDecimal(100));        
+        when(mockedOrder.isExtraHot()).thenReturn(true);
+        Packet message = Protocol.generateCommand(mockedOrder);
         assertEquals("tea Extra Hot", "Th:1:0", message.getMessage());
     }
     
     @Test
-    public void chocolateExtraHot() throws NegativeAmountException{
-        ConsumerOrder order = new ConsumerOrder(Drink.Chocolate,2,100,true);
-        Packet message = Protocol.generateCommand(order);
+    public void chocolateExtraHotInstruction() throws NegativeAmountException{
+        when(mockedOrder.getDrink()).thenReturn(Drink.Chocolate);
+        when(mockedOrder.getSugar()).thenReturn(2);
+        when(mockedOrder.isWithSugar()).thenReturn(true);
+        when(mockedOrder.getAmount()).thenReturn(new BigDecimal(100));        
+        when(mockedOrder.isExtraHot()).thenReturn(true);
+        Packet message = Protocol.generateCommand(mockedOrder);
         assertEquals("chocolate Extra Hot", "Hh:2:0", message.getMessage());
     }
     
     @Test
-    public void orangeExtraHotWithSugar() throws NegativeAmountException{
-        ConsumerOrder order = new ConsumerOrder(Drink.OrangeJuice,2,100,true);
-        Packet message = Protocol.generateCommand(order);
+    public void orangeExtraHotWithSugarInstruction() throws NegativeAmountException{
+        when(mockedOrder.getDrink()).thenReturn(Drink.OrangeJuice);
+        when(mockedOrder.getSugar()).thenReturn(2);
+        when(mockedOrder.isWithSugar()).thenReturn(true);
+        when(mockedOrder.getAmount()).thenReturn(new BigDecimal(100));        
+        when(mockedOrder.isExtraHot()).thenReturn(true);
+        Packet message = Protocol.generateCommand(mockedOrder);
         assertEquals("oragne juice Extra Hot with Sugar", "O::", message.getMessage());
     }
 }
